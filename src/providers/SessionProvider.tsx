@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
+import { createContext, useEffect, useState, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
@@ -18,18 +13,13 @@ type SessionContextType = {
   isLoading: boolean;
 };
 
-export const SessionContext = createContext<
-  SessionContextType | undefined
->(undefined);
+export const SessionContext = createContext<SessionContextType | undefined>(
+  undefined
+);
 
-export function SessionProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function SessionProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -37,14 +27,14 @@ export function SessionProvider({
 
     const loadSession = async () => {
       try {
-        const me = await fetchMe(); // calls /auth/me
+        const me = await fetchMe(); // GET /me
         if (isMounted) setUser(me);
       } catch (error) {
-        if (
-          axios.isAxiosError(error) &&
-          error.response?.status === 401
-        ) {
-          router.replace("/login");
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          const currentPath = window.location.pathname;
+          router.replace(
+            `/auth?mode=login&redirectTo=${encodeURIComponent(currentPath)}`
+          );
         }
       } finally {
         if (isMounted) setIsLoading(false);
@@ -58,14 +48,14 @@ export function SessionProvider({
     };
   }, [router]);
 
-  const value: SessionContextType = {
-    user,
-    isAuthenticated: !!user,
-    isLoading,
-  };
-
   return (
-    <SessionContext.Provider value={value}>
+    <SessionContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!user,
+        isLoading,
+      }}
+    >
       {isLoading ? <FullPageLoader /> : children}
     </SessionContext.Provider>
   );
