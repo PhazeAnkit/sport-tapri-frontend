@@ -11,7 +11,14 @@ export default function HomePage() {
 
   if (!isAuthenticated) {
     // This should never render because middleware + provider handle it
-    return <p>Not authenticated</p>;
+    return (
+      <div>
+        <div className="fixed bottom-4 right-4 bg-red-500 text-white p-4 z-50">
+          Tailwind OK
+        </div>
+        <p>Not authenticated</p>
+      </div>
+    );
   }
 
   return (
@@ -21,6 +28,9 @@ export default function HomePage() {
       <p>
         Logged in as <strong>{user?.username}</strong>
       </p>
+      <div className="fixed bottom-4 right-4 bg-red-500 text-white p-4 z-50">
+        Tailwind OK
+      </div>
 
       <p>Refresh this page — it should stay here.</p>
     </div>

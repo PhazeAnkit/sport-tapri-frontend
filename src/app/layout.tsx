@@ -1,3 +1,4 @@
+import "./globals.css";
 import { SessionProvider } from "@/providers/SessionProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
 
@@ -7,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html lang="en">
       <body>
         <QueryProvider>
           <SessionProvider>{children}</SessionProvider>
