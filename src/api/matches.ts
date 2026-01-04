@@ -4,16 +4,46 @@ export type MatchItem = {
   id: string;
   startTime: string;
   status: "SCHEDULED" | "LIVE" | "FINISHED";
-  sport: { id: string; name: string; slug: string };
-  league: { id: string; name: string; country: string };
-  homeTeam: { id: string; name: string; shortName?: string; logoUrl?: string };
-  awayTeam: { id: string; name: string; shortName?: string; logoUrl?: string };
-  result?: { homeScore?: number; awayScore?: number };
+
+  // ✅ NEW — provided by backend
+  isFavourite: boolean;
+  favouriteId: string | null;
+
+  sport: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+
+  league: {
+    id: string;
+    name: string;
+    country: string;
+  };
+
+  homeTeam: {
+    id: string;
+    name: string;
+    shortName?: string;
+    logoUrl?: string;
+  };
+
+  awayTeam: {
+    id: string;
+    name: string;
+    shortName?: string;
+    logoUrl?: string;
+  };
+
+  result?: {
+    homeScore?: number;
+    awayScore?: number;
+  };
 };
 
 export type MatchesResponse = {
   data: MatchItem[];
-  nextCursor: string | null; // ISO startTime
+  nextCursor: string | null;
   hasMore: boolean;
 };
 

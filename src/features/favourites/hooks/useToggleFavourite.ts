@@ -1,8 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  addFavourite,
-  removeFavourite,
-} from "@/api/favourites";
+import { addFavourite, removeFavourite } from "@/api/favourites";
 
 export function useToggleFavourite() {
   const queryClient = useQueryClient();
@@ -11,17 +8,20 @@ export function useToggleFavourite() {
     mutationFn: async ({
       matchId,
       favouriteId,
+      isFavourite,
     }: {
       matchId: string;
-      favouriteId?: string | null;
+      favouriteId: string | null;
+      isFavourite: boolean;
     }) => {
-      return favouriteId
-        ? removeFavourite(favouriteId)
-        : addFavourite(matchId);
+      return isFavourite
+        ? removeFavourite(favouriteId!)
+        : addFavourite(matchId);        
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["favourites"] });
+      // single source of truth
+      queryClient.invalidateQueries({ queryKey: ["matches"] });
     },
   });
 }

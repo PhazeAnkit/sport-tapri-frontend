@@ -99,7 +99,7 @@ This avoids unnecessary API calls and improves performance.
 - Node.js >= 18
 - pnpm
 - Running backend server
-
+    
 ### Installation
 
 ```bash

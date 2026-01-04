@@ -41,7 +41,11 @@ export default function MatchCard({ match }: { match: MatchWithFavourite }) {
       </div>
 
       <div className="mt-3 flex justify-end">
-        <FavouriteButton matchId={match.id} favouriteId={match.favourite?.id} />
+        <FavouriteButton
+          matchId={match.id}
+          isFavourite={match.isFavourite}
+          favouriteId={match.favouriteId}
+        />
       </div>
     </div>
   );
