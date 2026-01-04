@@ -5,10 +5,28 @@ import { useMatches } from "../hooks/useMatches";
 import MatchCard from "./MatchCard";
 import MatchesSkeleton from "./MatchesSkeleton";
 import { groupMatchesByDate } from "../utils/groupByDate";
+import { useFavourites } from "@/features/favourites/hooks/useFavourites";
+import { MatchWithFavourite } from "../types";
 
 export default function MatchesSection() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useMatches();
+
+  const { data: favouritesData } = useFavourites();
+
+  const favouritesMap = new Map(
+    (favouritesData ?? []).map((f) => [f.matchId, f.id])
+  );
+
+  const allMatches: MatchWithFavourite[] =
+    data?.pages.flatMap((p) =>
+      p.data.map((match) => ({
+        ...match,
+        favourite: favouritesMap.has(match.id)
+          ? { id: favouritesMap.get(match.id)! }
+          : null,
+      }))
+    ) ?? [];
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -38,7 +56,6 @@ export default function MatchesSection() {
     );
   }
 
-  const allMatches = data?.pages.flatMap((p) => p.data) ?? [];
   const grouped = groupMatchesByDate(allMatches);
 
   return (

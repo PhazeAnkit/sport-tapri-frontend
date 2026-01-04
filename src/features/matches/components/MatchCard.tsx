@@ -1,7 +1,9 @@
-import { MatchItem } from "@/api/matches";
+import { MatchWithFavourite } from "../types";
+import FavouriteButton from "@/features/favourites/components/FavouritesButton";
 
-export default function MatchCard({ match }: { match: MatchItem }) {
+export default function MatchCard({ match }: { match: MatchWithFavourite }) {
   const isFinished = match.status === "FINISHED";
+
   const timeLabel = new Date(match.startTime).toLocaleString(undefined, {
     month: "short",
     day: "numeric",
@@ -36,6 +38,10 @@ export default function MatchCard({ match }: { match: MatchItem }) {
         <div className="flex-1">
           <p className="font-semibold">{match.awayTeam.name}</p>
         </div>
+      </div>
+
+      <div className="mt-3 flex justify-end">
+        <FavouriteButton matchId={match.id} favouriteId={match.favourite?.id} />
       </div>
     </div>
   );
