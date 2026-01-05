@@ -1,8 +1,9 @@
 import { http } from "./http";
+import { MatchItem } from "./matches";
 
 export type FavouriteItem = {
   id: string;
-  matchId: string;
+  match: MatchItem;
 };
 
 export async function fetchFavourites(): Promise<FavouriteItem[]> {

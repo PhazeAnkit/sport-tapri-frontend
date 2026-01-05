@@ -60,3 +60,4 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     </SessionContext.Provider>
   );
 }
+  
