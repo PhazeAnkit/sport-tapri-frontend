@@ -28,3 +28,20 @@ export async function fetchLeagues(
   });
   return res.data;
 }
+
+
+export type LeagueName = {
+  id: string;
+  name: string;
+  country: string;
+  sportId: string;
+};
+
+export async function fetchLeaguesName(
+  sportId?: string
+): Promise<LeagueItem[]> {
+  const res = await http.get("/leagues/leaguesName", {
+    params: sportId ? { sportId } : {},
+  });
+  return res.data.data;
+}

@@ -18,3 +18,14 @@ export async function fetchSports(): Promise<SportsResponse> {
   const res = await http.get("/sports");
   return res.data;
 }
+
+export type SportName = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+export async function fetchSportsName(): Promise<SportItem[]> {
+  const res = await http.get("/sports/sportName");
+  return res.data.data;
+}

@@ -47,12 +47,15 @@ export type MatchesResponse = {
   hasMore: boolean;
 };
 
-export async function fetchMatches(
-  cursor?: string,
-  limit = 20
-): Promise<MatchesResponse> {
-  const res = await http.get("/matches", {
-    params: { cursor, limit },
-  });
+export async function fetchMatches(params: {
+  cursor?: string;
+  limit?: number;
+  sportId?: string;
+  leagueId?: string;
+  teamId?: string;
+  fromDate?: string;
+  toDate?: string;
+}) {
+  const res = await http.get("/matches", { params });
   return res.data;
 }
